@@ -1,0 +1,23 @@
+# General
+.idea
+.vscode
+.cursor
+*.pyc
+__pycache__/
+*.log
+.env
+node_modules/
+build/
+dist/
+.DS_Store
+.history
+
+# Python
+*.egg-info
+*.swp
+venv/
+instance/
+
+# React
+patient-frontend/node_modules
+patient-frontend/build
