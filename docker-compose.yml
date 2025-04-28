@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  auth-service:
+    build: ./auth-service
+    environment:
+      - CLIENT_ID=${CLIENT_ID}
+      - FHIR_AUTH_URL=${FHIR_AUTH_URL}
+      - FHIR_TOKEN_URL=${FHIR_TOKEN_URL}
+
+  fhir-proxy:
+    build: ./fhir-proxy-service
+    environment:
+      - FHIR_BASE_URL=${FHIR_BASE_URL}
+
+  gateway:
+    build: ./gateway
+    ports:
+      - "8000:8000"
+    depends_on:
+      - auth-service
+      - fhir-proxy
+
+  patient-frontend:
+    build: ./patient-frontend
+    ports:
+      - "3000:80"
+    environment:
+      - REACT_APP_API_BASE=http://localhost:8000
+    depends_on:
+      - gateway
